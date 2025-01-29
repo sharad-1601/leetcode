@@ -1,0 +1,35 @@
+# CPP SOLUTION USING DP AND MAP
+
+
+class Solution {
+public:
+
+bool solve(int i, string& s, map<string, int>& mp, vector<int>& dp){
+
+    if(i == s.size())  return 1;
+
+    if(dp[i] != -1)   return dp[i];
+ 
+    string temp = "";
+
+    for(int j = i; j < s.size(); j++){
+        temp.push_back(s[j]);
+        if(mp.find(temp) != mp.end()){
+            if(solve(j+1, s, mp, dp)){
+                return dp[i] = 1;
+            }
+        }
+    }
+    return dp[i] = 0;
+}
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+
+        map<string, int>mp;
+        for(int i = 0; i<wordDict.size(); i++){
+            mp[wordDict[i]] = 1;
+        }
+        vector<int>dp(s.size(), -1);
+        return solve(0, s, mp, dp);
+    }
+};
